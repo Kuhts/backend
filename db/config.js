@@ -17,7 +17,7 @@ const config = {
   connection,
   pool,
   migrations,
-  // debug: true,
+  debug: true,
   asyncStackTraces: true,
 }
 

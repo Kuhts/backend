@@ -18,18 +18,17 @@ module.exports = router
 router.get('/:id/detach', (req, res, next) => {
   const { params, user: usr, } = req
   const { id, } = params
-  return user.removeProvider(usr, params.id)
-    .then(() => {
-      res.json({
-        data: {
-          container: 'user',
-          path: ['providers', id],
-          value: null,
-        },
-      })
-    }, ({
-      message,
-    }) => res.boom.unauthorized(message))
+  return user.removeProvider(usr, id).then(() => {
+    res.json({
+      data: {
+        container: 'user',
+        path: ['providers', id],
+        value: null,
+      },
+    })
+  }).catch(({
+    message,
+  }) => res.boom.unauthorized(message))
 })
 // router.use('/twitter', twitter)
 router.use('/facebook', facebook)

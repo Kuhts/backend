@@ -45,7 +45,7 @@ function setup () {
   passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback))
   passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback))
   passport.use(new GithubStrategy(GITHUB_CONFIG, callback))
-  passport.use(new LocalStrategy(localCallback))
+  // passport.use(new LocalStrategy(localCallback))
 }
 // The callback that is invoked when an OAuth provider sends back user
 // information. Normally, you would save the user to the database
@@ -53,9 +53,8 @@ function setup () {
 function callback(req, accessToken, refreshToken, profile, cb) {
   const prov = toProvider[profile.provider](profile)
   const { user, } = req
-  return (user ? merge(user, prov) : create(prov))
-    .then((data) => cb(null, user || data))
-    .catch((err) => cb(err))
+  const prom = user ? merge(user, prov) : create(prov)
+  return prom.then((data) => cb(null, user || data)).catch((err) => cb(err))
 }
 
 function merge(usr, prov) {
@@ -77,15 +76,13 @@ function create(prov) {
 function deserializeUser(id, cb) {
   return user.get({
     id,
-  }).then(([user]) => {
-    cb(null, user)
-  }).catch(cb)
+  }).then(([user]) => cb(null, user)).catch(cb)
 }
 
 function serializeUser(data, cb) {
   return cb(null, data.id)
 }
 
-function localCallback(username, password, done) {
-  console.log(username, password, done)
-}
+// function localCallback(username, password, done) {
+//   console.log(username, password, done)
+// }

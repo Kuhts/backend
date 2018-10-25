@@ -45,12 +45,13 @@ function updateProvider(user, key, provider) {
 }
 
 function get(selector) {
-  return connection('users')
-    .where(selector)
+  return connection('users').where(selector)
 }
 
 function setProviders(id, providers) {
-  return get({ id, })
+  return connection
+    .from('users')
+    .where('id', id)
     .update('providers', providers)
     .returning('*')
     .then(([user]) => user)
@@ -91,14 +92,14 @@ function create(user) {
     .then(([user]) => user)
 }
 
-function createLocal({
-  username,
-  password: pass,
-}) {
-  const salt = bcrypt.genSaltSync();
-  const password = bcrypt.hashSync(pass, salt);
-  return create({
-    username,
-    password,
-  })
-}
+// function createLocal({
+//   username,
+//   password: pass,
+// }) {
+//   const salt = bcrypt.genSaltSync();
+//   const password = bcrypt.hashSync(pass, salt);
+//   return create({
+//     username,
+//     password,
+//   })
+// }
