@@ -13,7 +13,6 @@ module.exports = {
 function user(req, res) {
   // const io = req.app.get('io')
   return getByProvider(req.user).then((user) => {
-    console.log('sending auth user', user)
     res.json(sterilize(user))
     // io.in(req.session.socketId).emit('user', user)
     // res.end()

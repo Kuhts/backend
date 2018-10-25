@@ -79,11 +79,11 @@ app.get('/wake-up', (req, res) => res.send('👍'))
 app.use('/', routes)
 
 // db.setup().then(() => (
-  server.listen(PORT, (err) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(`listening on ${PORT}`)
-    }
-  })
+server.listen(PORT, (err) => {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(`listening on ${PORT}`)
+  }
+})
 // ))

@@ -1,5 +1,8 @@
 const dotenv = require('dotenv')
 dotenv.config()
+const {
+  assign,
+} = require('lodash')
 
 const appname = 'characterastronomy'
 const {
@@ -37,31 +40,27 @@ const CLIENT_ORIGIN = PROD
   ? 'https://react-auth-twitter.netlify.com'
   : ['https://127.0.0.1:3000', 'https://localhost:3000']
 
-const TWITTER_CONFIG = {
+const TWITTER_CONFIG = config({
   consumerKey: TWITTER_KEY,
   consumerSecret: TWITTER_SECRET,
   callbackURL: twitterURL,
-}
-
-const GOOGLE_CONFIG = {
+})
+const GOOGLE_CONFIG = config({
   clientID: GOOGLE_KEY,
   clientSecret: GOOGLE_SECRET,
   callbackURL: googleURL
-}
-
-const FACEBOOK_CONFIG = {
+})
+const FACEBOOK_CONFIG = config({
   clientID: FACEBOOK_KEY,
   clientSecret: FACEBOOK_SECRET,
   profileFields: ['id', 'emails', 'name', 'picture.width(250)'],
   callbackURL: facebookURL
-}
-
-const GITHUB_CONFIG = {
+})
+const GITHUB_CONFIG = config({
   clientID: GITHUB_KEY,
   clientSecret: GITHUB_SECRET,
   callbackURL: githubURL
-}
-
+})
 module.exports = {
   DOMAIN,
   DIR,
@@ -84,4 +83,10 @@ module.exports = {
   GITHUB_KEY,
   GITHUB_SECRET,
   PG_CONNECTION_URL,
+}
+
+function config(config) {
+  return assign({
+    passReqToCallback: true
+  }, config)
 }

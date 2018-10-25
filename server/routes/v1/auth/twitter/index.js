@@ -3,11 +3,10 @@ const passport = require('passport')
 const {
   user,
 } = require('server/socket')
-const router = new express.Router()
 const { auth, } = require('server/helpers')
+const router = new express.Router()
 module.exports = router
 
-const twitterAuth = passport.authenticate('twitter')
-router.get('/callback', twitterAuth, user)
-router.use(auth.transferSocketId)
-router.get('/', twitterAuth)
+const twitterLogin = passport.authenticate('twitter')
+router.use('/callback', twitterLogin, user.signup)
+router.use('/', twitterLogin)

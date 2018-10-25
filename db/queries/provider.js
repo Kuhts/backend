@@ -1,6 +1,7 @@
 const {
   connection,
 } = require('db')
+const toProvider = require('server/helpers/to-provider')
 const providers = connection('providers')
 
 const provider = {
@@ -25,7 +26,9 @@ function get({
     .where({
       key,
       provider,
-    }).then(([prov]) => prov)
+    }).then(([prov]) => {
+      return toProvider[prov.provider](prov.data)
+    })
 }
 
 function remove({

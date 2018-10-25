@@ -3,6 +3,7 @@ const {
   assign,
   isEqual,
   omit,
+  keys,
 } = require('lodash')
 const {
   connection,
@@ -14,21 +15,22 @@ const user = {
   updateProvider,
   setProviders,
   removeProvider,
+  get,
 }
 
 module.exports = user
 
-function removeProvider(provider, key) {
-  return getByProvider(provider)
-    .then((user) => {
-      const { providers, } = user
-      const prov = providers[key]
-      if (!prov) {
-        return user
-      }
-      delete providers[key]
-      return setProviders(user.id, providers)
-    })
+function removeProvider(user, key) {
+  const { providers, } = user
+  const prov = providers[key]
+  if (!prov) {
+    return Promise.resolve(user)
+  }
+  if (keys(providers).length === 1) {
+    return Promise.reject('Unable to unlink only remaining provider.')
+  }
+  delete providers[key]
+  return setProviders(user.id, providers)
 }
 
 function updateProvider(user, key, provider) {
@@ -42,9 +44,13 @@ function updateProvider(user, key, provider) {
   return setProviders(user.id, prov)
 }
 
-function setProviders(id, providers) {
+function get(selector) {
   return connection('users')
-    .where('id', id)
+    .where(selector)
+}
+
+function setProviders(id, providers) {
+  return get({ id, })
     .update('providers', providers)
     .returning('*')
     .then(([user]) => user)

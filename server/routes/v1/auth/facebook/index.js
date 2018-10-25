@@ -7,7 +7,6 @@ const { auth, } = require('server/helpers')
 const router = new express.Router()
 module.exports = router
 
-const facebookAuth = passport.authenticate('facebook')
-router.get('/callback', facebookAuth, user)
-router.use(auth.transferSocketId)
-router.get('/', facebookAuth)
+const facebookLogin = passport.authenticate('facebook')
+router.use('/callback', facebookLogin, user.signup)
+router.use('/', facebookLogin)
