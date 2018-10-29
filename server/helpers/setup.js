@@ -17,12 +17,19 @@ const {
 const {
   Strategy: GithubStrategy,
 } = require('passport-github')
+const {
+  Strategy: RedditStrategy,
+} = require('passport-reddit')
+const OAuth2Strategy = require('passport-oauth2')
+
 const env = require('env')
 const {
   TWITTER_CONFIG,
   GOOGLE_CONFIG,
   FACEBOOK_CONFIG,
   GITHUB_CONFIG,
+  MEDIUM_CONFIG,
+  REDDIT_CONFIG,
 } = env
 const toProvider = require('./to-provider')
 const user = require('db/queries/user')
@@ -45,6 +52,8 @@ function setup () {
   passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback))
   passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback))
   passport.use(new GithubStrategy(GITHUB_CONFIG, callback))
+  passport.use(new RedditStrategy(REDDIT_CONFIG, callback))
+  passport.use('medium', new OAuth2Strategy(MEDIUM_CONFIG, callback))
   // passport.use(new LocalStrategy(localCallback))
 }
 // The callback that is invoked when an OAuth provider sends back user

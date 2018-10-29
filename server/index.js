@@ -12,6 +12,14 @@ const boom = require('express-boom')
 const db = require('db')
 const routes = require('server/routes')
 const helpers = require('server/helpers')
+try {
+  const bluebird = require('bluebird')
+  bluebird.config({
+    warnings: false
+  })
+} catch (e) {
+  console.log(e)
+}
 const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
@@ -56,7 +64,8 @@ helpers.setup()
 
 // Accept requests from our client
 app.use(cors({
-  origin: CLIENT_ORIGIN
+  origin: CLIENT_ORIGIN,
+  credentials: true,
 }))
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true')

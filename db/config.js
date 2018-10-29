@@ -17,9 +17,22 @@ const config = {
   connection,
   pool,
   migrations,
-  debug: true,
+  // debug: true,
   asyncStackTraces: true,
+  // overly simplified snake_case -> camelCase converter
+  // postProcessResponse: (result, queryContext) => {
+  //   // TODO: add special case for raw results (depends on dialect)
+  //   if (Array.isArray(result)) {
+  //     return result.map(row => convertToCamel(row));
+  //   } else {
+  //     return convertToCamel(result);
+  //   }
+  // }
 }
+
+// function convertToCamel(row) {
+//   return _.mapKeys((value, key) => _.camelCase(key))
+// }
 
 const configs = {
   development: config,

@@ -1,9 +1,11 @@
 const bcrypt = require('bcryptjs')
+const uuid = require('uuid')
 const {
   assign,
   isEqual,
-  omit,
   keys,
+  pick,
+  omit,
 } = require('lodash')
 const {
   connection,
@@ -13,12 +15,27 @@ const user = {
   getByProvider,
   sterilize,
   updateProvider,
+  update,
   setProviders,
   removeProvider,
   get,
+  find,
+  findOne,
+  publicize,
 }
 
 module.exports = user
+
+function publicize(user) {
+  const whitelist = ['username', 'pathname', 'image', 'email', 'phone']
+  const blacklist = user.blacklistedAttributes || []
+  const whitelisted = pick(user, whitelist)
+  return omit(whitelisted, blacklist)
+}
+
+function users() {
+  return connection('users')
+}
 
 function removeProvider(user, key) {
   const { providers, } = user
@@ -33,6 +50,21 @@ function removeProvider(user, key) {
   return setProviders(user.id, providers)
 }
 
+function findOne(where) {
+  return find(where).limit(1).then(([user]) => user)
+}
+
+function find(where) {
+  return users().where(where)
+}
+
+function update(id, updates) {
+  return users().where('id', id)
+    .update(updates)
+    .returning('*')
+    .then(([user]) => user)
+}
+
 function updateProvider(user, key, provider) {
   const { providers = {}, } = user
   if (isEqual(provider, providers[key])) {
@@ -45,12 +77,11 @@ function updateProvider(user, key, provider) {
 }
 
 function get(selector) {
-  return connection('users').where(selector)
+  return users().where(selector)
 }
 
 function setProviders(id, providers) {
-  return connection
-    .from('users')
+  return users()
     .where('id', id)
     .update('providers', providers)
     .returning('*')
@@ -72,7 +103,7 @@ function getByProvider({
       },
     })
   })
-  return connection('users')
+  return users()
     .where(raw)
     .then(([user]) => user)
 }
@@ -83,10 +114,15 @@ function generateUsername () {
 }
 
 function create(user) {
+  const username = user.username || generateUsername()
+  const pathname = user.pathname || username
+  const id = uuid.v4()
   const nu = assign({
-    username: generateUsername(),
+    id,
+    username,
+    pathname,
   }, user)
-  return connection('users')
+  return users()
     .insert(nu)
     .returning('*')
     .then(([user]) => user)

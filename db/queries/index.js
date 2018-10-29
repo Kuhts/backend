@@ -1,7 +1,11 @@
 const user = require('db/queries/user')
-const provider = require('db/queries/provider')
+const documents = require('db/queries/documents')
+
+const {
+  connection,
+} = require('db')
 
 module.exports = {
   user,
-  provider,
+  documents,
 }

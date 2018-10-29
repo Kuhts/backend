@@ -4,6 +4,7 @@ module.exports = {
   google,
   facebook,
   github,
+  reddit,
 }
 
 function twitter(user) {
@@ -63,5 +64,19 @@ function github (user) {
     provider: 'github',
     name: username,
     image: photos[0].value,
+  }
+}
+
+function reddit (user) {
+  const {
+    id,
+    name,
+    photo,
+  } = user
+  return {
+    key: id,
+    name,
+    provider: 'reddit',
+    image: photo,
   }
 }
