@@ -19,7 +19,7 @@ const config = {
   migrations,
   // debug: true,
   asyncStackTraces: true,
-  // overly simplified snake_case -> camelCase converter
+  // // overly simplified snake_case -> camelCase converter
   // postProcessResponse: (result, queryContext) => {
   //   // TODO: add special case for raw results (depends on dialect)
   //   if (Array.isArray(result)) {

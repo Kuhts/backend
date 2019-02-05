@@ -10,7 +10,6 @@ router.post('/register', (req, res, next) => {
     .then(() => next())
     .catch(next)
 }, localAuth, (req, res, next) => {
-  console.log(req.user)
   if (!req.user) {
     next(new Error('no user'))
   } else {

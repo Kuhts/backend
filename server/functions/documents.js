@@ -2,9 +2,40 @@ const {
   documents,
 } = require('db/queries')
 
+const columns = [
+  'created_at',
+  'updated_at',
+  'id',
+  'name',
+  'pathname',
+  // 'author',
+  // 'userId',
+]
+const docColumns = makeDocCols(columns)
 module.exports = {
   create,
+  getMany,
   get,
+  write,
+}
+
+function write(req, res) {
+  return documents
+    .write(req.params.id, req.body)
+    .then(() => res.json({}))
+}
+
+function makeDocCols(columns) {
+  return columns.map((key) => `documents.${key}`)
+}
+
+function get(req, res) {
+  const cols = docColumns.concat(['documents.contents'])
+  return documents.get(cols, {
+    userId: req.user.id,
+    'documents.pathname': req.params.id,
+  })
+  .then((doc) => res.json(doc))
 }
 
 function create(req, res) {
@@ -13,7 +44,7 @@ function create(req, res) {
   })
 }
 
-function get(req, res) {
+function getMany(req, res) {
   const {
     query,
     user,
@@ -30,16 +61,8 @@ function get(req, res) {
   const selectors = {
     userId,
   }
-  const columns = [
-    'created_at',
-    'updated_at',
-    'id',
-    'name',
-    'pathname',
-    // 'userId',
-  ]
   return Promise.all([
-    documents.get(columns, selectors),
+    documents.getMany(docColumns, selectors),
     documents.count({
       userId,
     }),

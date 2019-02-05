@@ -22,7 +22,9 @@ router.put('/user/', (req, res) => {
 })
 
 router.post('/documents/', documents.create)
-router.get('/documents/', documents.get)
+router.put('/documents/:id/write', documents.write)
+router.get('/documents/:id', documents.get)
+router.get('/documents/', documents.getMany)
 
 function subset(ask, user) {
   return _.mapValues(ask, (v, key) => user[key])

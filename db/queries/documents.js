@@ -10,9 +10,23 @@ const documents = {
   create,
   get,
   count,
+  getMany,
+  write,
 }
 
 module.exports = documents
+
+function write(id, contents) {
+  return docs()
+    .update({
+      contents: JSON.stringify(contents),
+    })
+    .where({
+      id,
+    })
+    .returning('*')
+    .then(([doc]) => doc)
+}
 
 function create(userId, doc) {
   const id = uuid.v4()
@@ -28,14 +42,28 @@ function create(userId, doc) {
     .then(([doc]) => doc)
 }
 
-function get(columns, select) {
+function docs() {
   return connection('documents')
+}
+
+function joinedDocuments() {
+  return docs()
     .join('users', 'documents.userId', '=', 'users.id')
-    .select(...columns.map((key) => `documents.${key}`))
     .select({
       author: 'users.username',
     })
-    .where(select)
+}
+
+function selection(method, columns) {
+  return joinedDocuments()[method](...columns)
+}
+
+function get(columns, where) {
+  return selection('first', columns).where(where)
+}
+
+function getMany(columns, where) {
+  return selection('select', columns).where(where)
 }
 
 function count(select) {
