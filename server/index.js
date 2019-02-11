@@ -31,7 +31,7 @@ const dir = process.cwd()
 const app = express()
 let server = null
 
-if (!NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
   server = http.createServer(app)
 } else {
   const serverKey = path.join(dir, 'certs', 'server.key')
