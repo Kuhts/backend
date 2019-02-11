@@ -67,10 +67,6 @@ app.use(cors({
   origin: CLIENT_ORIGIN,
   credentials: true,
 }))
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true')
-  next()
-})
 
 // Connecting sockets to the server and adding them to the request
 // so that we can access them later in the controller

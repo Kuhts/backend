@@ -9,6 +9,7 @@ const appname = 'characterastronomy'
 const {
   PORT = 8080,
   NODE_ENV,
+  CLIENT_ORIGIN,
   SESSION_SECRET,
   TWITTER_KEY,
   TWITTER_SECRET,
@@ -56,10 +57,6 @@ const {
   medium: mediumURL,
   reddit: redditURL,
 } = callbacks
-
-const CLIENT_ORIGIN = PROD
-  ? 'https://react-auth-twitter.netlify.com'
-  : ['https://127.0.0.1:3000', 'https://localhost:3000']
 
 const TWITTER_CONFIG = config({
   consumerKey: TWITTER_KEY,
