@@ -62,11 +62,17 @@ app.use(passport.initialize())
 app.use(passport.session())
 helpers.setup()
 
-// Accept requests from our client
-app.use(cors({
-  origin: CLIENT_ORIGIN,
-  credentials: true,
-}))
+// // Accept requests from our client
+// app.use(cors({
+//   origin: CLIENT_ORIGIN,
+//   credentials: true,
+// }))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true')
+  res.header('Access-Control-Allow-Origin', CLIENT_ORIGIN)
+  next()
+})
+
 
 // Connecting sockets to the server and adding them to the request
 // so that we can access them later in the controller
