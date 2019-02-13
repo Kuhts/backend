@@ -36,11 +36,9 @@ if (NODE_ENV === 'production') {
 } else {
   const serverKey = path.join(dir, 'certs', 'server.key')
   const serverCert = path.join(dir, 'certs', 'server.crt')
-  // const serverPem = path.join(dir, 'certs', 'rootCA.pem')
   const config = {
     key: fs.readFileSync(serverKey),
-    cert: fs.readFileSync(serverCert) // ,
-    // ca: fs.readFileSync(serverPem)
+    cert: fs.readFileSync(serverCert)
   }
   server = https.createServer(config, app)
 }
@@ -48,7 +46,6 @@ if (NODE_ENV === 'production') {
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
-// saveUninitialized: true allows us to attach the socket id to the session
 // before we have athenticated the user
 const store = new RedisStore()
 app.use(session({
@@ -62,11 +59,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 helpers.setup()
 
-// // Accept requests from our client
-// app.use(cors({
-//   origin: CLIENT_ORIGIN,
-//   credentials: true,
-// }))
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Origin', CLIENT_ORIGIN)
@@ -78,14 +70,9 @@ app.use((req, res, next) => {
 // so that we can access them later in the controller
 const io = socketio(server)
 app.set('io', io)
-// io.on('connect', (socket) => {
-//   console.log('connected', socket)
-// })
-
 // Catch a start up request so that a sleepy Heroku instance can
 // be responsive as soon as possible
 app.get('/wake-up', (req, res) => res.send('👍'))
-
 // Direct all other requests at our router
 app.use('/', routes)
 
