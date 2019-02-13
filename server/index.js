@@ -25,6 +25,7 @@ const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
   NODE_ENV,
+  REDIS_URL,
   PORT,
 } = require('env')
 
@@ -54,7 +55,9 @@ app.use(morgan('combined', {
 app.use(boom())
 app.use(express.json())
 // before we have athenticated the user
-const store = new RedisStore()
+const store = new RedisStore({
+  url: REDIS_URL,
+})
 app.use(session({
   store,
   secret: SESSION_SECRET,
