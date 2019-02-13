@@ -6,7 +6,8 @@ const medium = require('server/routes/v1/auth/medium')
 const reddit = require('server/routes/v1/auth/reddit')
 const twitter = require('server/routes/v1/auth/twitter')
 const functions = require('server/functions')
-
+const morgan = require('morgan')
+const logger = morgan('dev')
 const {
   user,
 } = require('db/queries')
@@ -40,6 +41,7 @@ router.use('/reddit', reddit)
 // router.use('/local', local)
 router.get('/check', (req, res, next) => {
   const { user, } = req
+  logger('check user', user)
   if (user) {
     return res.json(user)
   } else {
