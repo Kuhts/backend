@@ -59,7 +59,7 @@ app.use(session({
   store,
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
 }))
 
 app.use(passport.initialize())
