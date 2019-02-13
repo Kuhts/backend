@@ -84,7 +84,7 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
-  logger('user', id)
+  console.log('user', id)
   return user.get({
     id,
   }).then(([user]) => cb(null, user)).catch(cb)
