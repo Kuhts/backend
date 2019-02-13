@@ -63,7 +63,7 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   httpOnly: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: { secure: true },
 }))
 
