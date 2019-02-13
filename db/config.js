@@ -1,7 +1,7 @@
 
 const {
   NODE_ENV,
-  PG_CONNECTION_URL: connection,
+  DATABASE_URL: connection,
 } = require('../env')
 
 const client = 'postgresql'

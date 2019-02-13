@@ -119,7 +119,7 @@ module.exports = {
   MEDIUM_SECRET,
   REDDIT_KEY,
   REDDIT_SECRET,
-  PG_CONNECTION_URL,
+  DATABASE_URL,
 }
 
 function config(config) {
