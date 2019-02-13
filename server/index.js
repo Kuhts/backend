@@ -9,7 +9,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const socketio = require('socket.io')
 const redis = require('redis')
-const RedisStore = require('connect-redis')(session);
+const RedisStore = require('connect-redis')(session)
 const boom = require('express-boom')
 const db = require('db')
 const routes = require('server/routes')
@@ -46,11 +46,7 @@ if (NODE_ENV === 'production') {
   server = https.createServer(config, app)
 }
 
-app.use(morgan('combined', {
-  skip: function (req, res) {
-    return res.statusCode < 400
-  }
-}))
+app.use(morgan('dev'))
 
 // Setup for passport and to accept JSON objects
 app.use(boom())

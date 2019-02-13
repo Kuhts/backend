@@ -9,6 +9,10 @@
     "pg-down": "knex migrate:rollback --knexfile ./db/config.js",
     "pg-up": "knex migrate:latest --knexfile ./db/config.js"
   },
+  "engines": {
+    "npm": ">=6.4.1",
+    "node": ">=10.15.0"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
