@@ -2,6 +2,7 @@ const passport = require('passport')
 const {
   isEqual,
 } = require('lodash')
+const morgan = require('morgan')
 const {
   Strategy: TwitterStrategy,
 } = require('passport-twitter')
@@ -21,7 +22,7 @@ const {
   Strategy: RedditStrategy,
 } = require('passport-reddit')
 const OAuth2Strategy = require('passport-oauth2')
-
+const logger = morgan('dev')
 const env = require('env')
 const {
   TWITTER_CONFIG,
@@ -83,7 +84,7 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
-  console.log('user', id)
+  logger('user', id)
   return user.get({
     id,
   }).then(([user]) => cb(null, user)).catch(cb)
