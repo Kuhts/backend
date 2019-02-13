@@ -62,6 +62,7 @@ app.use(session({
   store,
   secret: SESSION_SECRET,
   resave: false,
+  httpOnly: true,
   saveUninitialized: false,
 }))
 
