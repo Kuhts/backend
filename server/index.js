@@ -57,15 +57,13 @@ app.use(boom())
 app.use(express.json())
 // before we have athenticated the user
 const store = new RedisStore({
-  client: redis.createClient({
-    url: REDIS_URL,
-  }),
+  client: redis.createClient(),
 })
 app.use(session({
   store,
   secret: SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
 }))
 
 app.use(passport.initialize())

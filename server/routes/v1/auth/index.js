@@ -39,6 +39,7 @@ router.use('/reddit', reddit)
 // router.use('/local', local)
 router.get('/check', (req, res, next) => {
   const { user, } = req
+  console.log('check', user)
   if (user) {
     return res.json(user)
   } else {
