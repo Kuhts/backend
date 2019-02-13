@@ -53,6 +53,7 @@ app.use(boom())
 app.use(express.json())
 // before we have athenticated the user
 const store = new RedisStore({
+  url: REDIS_URL,
   client: redis.createClient(),
 })
 app.use(session({
