@@ -64,6 +64,7 @@ app.use(session({
   resave: false,
   httpOnly: true,
   saveUninitialized: false,
+  cookie: { secure: true },
 }))
 
 app.use(passport.initialize())
