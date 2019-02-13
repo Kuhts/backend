@@ -5,7 +5,7 @@ const {
   mapValues,
 } = require('lodash')
 
-const appname = 'characterastronomy'
+const appname = 'kuhts-api'
 const {
   PORT = 8080,
   NODE_ENV,
