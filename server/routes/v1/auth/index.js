@@ -16,7 +16,6 @@ const router = express.Router()
 
 module.exports = router
 
-
 router.get('/:id/detach', (req, res, next) => {
   const { params, user: usr, } = req
   const { id, } = params
@@ -51,4 +50,3 @@ router.get('/logout', (req, res) => {
   req.logout()
   res.json({})
 });
-

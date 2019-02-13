@@ -83,6 +83,7 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
+  console.log('user', id)
   return user.get({
     id,
   }).then(([user]) => cb(null, user)).catch(cb)
