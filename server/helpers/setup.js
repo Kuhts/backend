@@ -88,6 +88,7 @@ function deserializeUser(id, cb) {
 }
 
 function serializeUser(data, cb) {
+  console.log('serializing', data.id, data)
   return cb(null, data.id)
 }
 
