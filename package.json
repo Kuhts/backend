@@ -4,8 +4,8 @@
   "description": "Server for React/Node Social auth",
   "main": "server.js",
   "scripts": {
-    "dev": "NODE_PATH=./ nodemon ./server",
-    "start": "NODE_PATH=./ node ./server",
+    "dev": "npm run pg-up && NODE_PATH=./ nodemon ./server",
+    "start": "npm run pg-up && NODE_PATH=./ node ./server",
     "pg-down": "knex migrate:rollback --knexfile ./db/config.js",
     "pg-up": "knex migrate:latest --knexfile ./db/config.js"
   },

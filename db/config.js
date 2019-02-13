@@ -11,6 +11,7 @@ const pool = {
 }
 const migrations = {
   users: 'users',
+  documents: 'documents',
 }
 const config = {
   client,

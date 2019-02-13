@@ -5,7 +5,7 @@ const {
   mapValues,
 } = require('lodash')
 
-const appname = 'kuhts-api'
+const appname = 'kuhts'
 const {
   PORT = 8080,
   NODE_ENV,
@@ -28,7 +28,7 @@ const {
 
 const PROD = NODE_ENV === 'production'
 
-const DOMAIN = `${appname}.herokuapp.com`
+const DOMAIN = `${appname}-api.herokuapp.com`
 const DIR = process.cwd()
 
 // const PROVIDERS = ['twitter', 'google', 'facebook', 'github', 'medium']
