@@ -92,6 +92,9 @@ const REDDIT_CONFIG = config({
   callbackURL: redditURL,
 })
 
+process.on('captureException', captureException)
+process.on('unhandledRejection', captureException)
+
 module.exports = {
   DOMAIN,
   DIR,
@@ -126,4 +129,11 @@ function config(config) {
   return assign({
     passReqToCallback: true,
   }, config)
+}
+
+function captureException(e) {
+  console.log('exception', {
+    message: e.message,
+    stack: e.stack,
+  })
 }
