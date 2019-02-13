@@ -23,7 +23,7 @@ const {
   MEDIUM_SECRET,
   REDDIT_KEY,
   REDDIT_SECRET,
-  PG_CONNECTION_URL = `postgresql://localhost/${appname}`,
+  DATABASE_URL = `postgresql://localhost/${appname}`,
 } = process.env
 
 const PROD = NODE_ENV === 'production'
