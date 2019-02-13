@@ -8,6 +8,7 @@ const session = require('express-session')
 const cors = require('cors')
 const morgan = require('morgan')
 const socketio = require('socket.io')
+const redis = require('redis')
 const RedisStore = require('connect-redis')(session);
 const boom = require('express-boom')
 const db = require('db')
@@ -56,7 +57,9 @@ app.use(boom())
 app.use(express.json())
 // before we have athenticated the user
 const store = new RedisStore({
-  url: REDIS_URL,
+  client: redis.createClient({
+    url: REDIS_URL,
+  }),
 })
 app.use(session({
   store,
