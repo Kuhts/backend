@@ -82,13 +82,14 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
+  console.log('deserializing', id)
   return user.get({
     id,
   }).then(([user]) => cb(null, user)).catch(cb)
 }
 
 function serializeUser(data, cb) {
-  console.log('serializing', data.id, data)
+  console.log('serializing', data.id)
   return cb(null, data.id)
 }
 
