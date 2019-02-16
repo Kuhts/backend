@@ -46,8 +46,6 @@ if (NODE_ENV === 'production') {
   server = https.createServer(config, app)
 }
 
-app.use(morgan('dev'))
-
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
@@ -67,16 +65,19 @@ app.use(session({
   cookie: { secure: true },
 }))
 
-app.use(passport.initialize())
-app.use(passport.session())
-helpers.setup()
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true')
   res.header('Access-Control-Allow-Origin', CLIENT_ORIGIN)
   next()
 })
+app.use((req, res, next) => {
+  console.log(req.originalUrl)
+  next()
+})
 
+app.use(passport.initialize())
+app.use(passport.session())
+helpers.setup()
 
 // Connecting sockets to the server and adding them to the request
 // so that we can access them later in the controller
