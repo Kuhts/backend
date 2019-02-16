@@ -39,7 +39,8 @@ function get(req, res) {
 }
 
 function create(req, res) {
-  return documents.create(req.user.id, req.body).then((doc) => {
+  const { body, user, } = req
+  return documents.create(user.id, body).then((doc) => {
     res.json(doc)
   })
 }

@@ -65,11 +65,12 @@ app.use(session({
   cookie: { secure: true },
 }))
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true')
-  res.header('Access-Control-Allow-Origin', CLIENT_ORIGIN)
-  next()
-})
+app.use(cors({
+  credentials: true,
+  origin: CLIENT_ORIGIN,
+  optionsSuccessStatus: 200,
+}))
+
 app.use((req, res, next) => {
   console.log(req.originalUrl)
   next()
