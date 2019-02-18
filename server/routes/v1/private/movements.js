@@ -3,7 +3,7 @@ const router = new express.Router()
 module.exports = router
 
 const {
-  documents,
+  movements,
 } = require('server/functions')
 
 router.post('/', movements.create)

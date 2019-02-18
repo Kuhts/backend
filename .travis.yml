@@ -3,11 +3,22 @@ language: node_js
 node_js:
   - 'lts/*'
 
+before_script:
+  # lint the files (fail early)
+  - npm run security
+  # build the docker compose file
+  - npm run docker-build
+  - docker-compose up -d kuhts-postgres
+  - sleep 3
+  - npm run docker-migrate-up
+  # bring up the relevant services
+  - npm run docker-up-detached
+
 script:
   - 'npm run travis'
 
 services:
-  - redis-server
+  - docker
 
 cache:
   directories:

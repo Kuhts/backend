@@ -4,7 +4,6 @@ const crypto = require('crypto')
 const {
   user,
 } = require('server/socket')
-const { auth, } = require('server/helpers')
 const router = new express.Router()
 module.exports = router
 

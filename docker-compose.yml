@@ -1,0 +1,38 @@
+version: "2.1"
+
+networks:
+  kuhts:
+    driver: bridge
+
+services:
+  kuhts-redis:
+    container_name: kuhts-redis
+    image: redis:latest
+    ports:
+      - "3010:6379"
+    networks:
+      - kuhts
+  kuhts-postgres:
+    container_name: kuhts-postgres
+    image: postgres:10.4
+    ports:
+      - "3011:5432"
+    networks:
+      - kuhts
+    environment:
+      - "POSTGRES_USER=kuhts"
+      - "POSTGRES_PASSWORD=password"
+
+  kuhts-web:
+    container_name: kuhts-web
+    ports:
+      - "4000:8080"
+    command: "npm start"
+    extends:
+      file: base.yml
+      service: kuhts
+    depends_on:
+      - kuhts-postgres
+      - kuhts-redis
+    networks:
+      - kuhts

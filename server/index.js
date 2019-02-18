@@ -6,24 +6,22 @@ const http = require('http')
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors')
-const morgan = require('morgan')
 const socketio = require('socket.io')
 const RedisStore = require('connect-redis')(session)
 const boom = require('express-boom')
-const db = require('db')
 const routes = require('server/routes')
 const redis = require('redis')
 const helpers = require('server/helpers')
+const log = require('log')
 try {
   const bluebird = require('bluebird')
   bluebird.config({
-    warnings: false
+    warnings: false,
   })
 } catch (e) {
-  console.log(e)
+  log.message(e)
 }
 const {
-  CLIENT_ORIGIN,
   SESSION_SECRET,
   REDIS_URL,
   NODE_ENV,
@@ -50,11 +48,15 @@ if (NODE_ENV === 'production') {
   const serverCert = path.join(dir, 'certs', 'server.crt')
   const config = {
     key: fs.readFileSync(serverKey),
-    cert: fs.readFileSync(serverCert)
+    cert: fs.readFileSync(serverCert),
   }
   server = https.createServer(config, app)
 }
 
+app.use((req, res, next) => {
+  log.request(req)
+  next()
+})
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
@@ -77,7 +79,7 @@ app.use(session({
     path: '/',
   }, DOMAIN ? {
     domain: DOMAIN,
-  } : {})
+  } : {}),
 }))
 
 app.use(passport.initialize())
@@ -102,7 +104,7 @@ function start(port = PORT) {
       if (err) {
         reject(err)
       } else {
-        console.log(`listening on ${port}`)
+        log.message(`listening on ${port}`)
         resolve(app)
       }
     })

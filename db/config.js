@@ -35,5 +35,4 @@ const configs = {
   test: config,
 }
 configs.chosen = configs[NODE_ENV]
-
 module.exports = configs

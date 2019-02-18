@@ -22,26 +22,36 @@ const {
 } = require('passport-reddit')
 
 let strategies
-// if (NODE_ENV === 'test') {
-//   const Strategy = require('passport-mock').Strategy
-//   strategies = {
-//     Twitter: Strategy,
-//     Local: Strategy,
-//     Google: Strategy,
-//     Facebook: Strategy,
-//     Github: Strategy,
-//     Reddit: Strategy,
-//     Medium: Strategy,
-//   }
-// } else {
+if (NODE_ENV === 'test') {
+  const Strategy = require('passport-mock').Strategy
   strategies = {
-    Twitter: TwitterStrategy,
-    Local: LocalStrategy,
-    Google: GoogleStrategy,
-    Facebook: FacebookStrategy,
-    Github: GithubStrategy,
-    Reddit: RedditStrategy,
-    Medium: OAuth2Strategy,
+    Twitter: Strategy,
+    Local: Strategy,
+    Google: Strategy,
+    Facebook: Strategy,
+    Github: Strategy,
+    Reddit: Strategy,
+    Medium: Strategy,
   }
-// }
+// } else {
+//   strategies = {
+//     Twitter: TwitterStrategy,
+//     Local: LocalStrategy,
+//     Google: GoogleStrategy,
+//     Facebook: FacebookStrategy,
+//     Github: GithubStrategy,
+//     Reddit: RedditStrategy,
+//     Medium: OAuth2Strategy,
+//   }
+}
+
+strategies = {
+  Twitter: TwitterStrategy,
+  Local: LocalStrategy,
+  Google: GoogleStrategy,
+  Facebook: FacebookStrategy,
+  Github: GithubStrategy,
+  Reddit: RedditStrategy,
+  Medium: OAuth2Strategy,
+}
 module.exports = strategies

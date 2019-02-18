@@ -1,7 +1,4 @@
 const passport = require('passport')
-const {
-  isEqual,
-} = require('lodash')
 const strategies = require('server/helpers/strategies')
 const env = require('env')
 const {
@@ -14,13 +11,6 @@ const {
 } = env
 const toProvider = require('./to-provider')
 const user = require('db/queries/user')
-const {
-  connection
-} = require('db')
-const {
-  provider,
-} = require('db/queries')
-const auth = require('./auth')
 
 module.exports = setup
 

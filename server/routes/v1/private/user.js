@@ -6,9 +6,7 @@ module.exports = router
 router.put('/', (req, res) => {
   const { user, body, } = req
   return queries.user.update(user.id, body)
-  .then((json) => {
-    return res.json(subset(body, json))
-  }).catch((errors) => res.boom.badData({ errors, }))
+    .then((json) => res.json(subset(body, json))).catch((errors) => res.boom.badData({ errors, }))
 })
 
 router.get('/secret', (req, res) => {

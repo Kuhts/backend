@@ -4,6 +4,13 @@
   "description": "Server for React/Node Social auth",
   "main": "server.js",
   "scripts": {
+    "lint": "npm run lint:js",
+    "lint:js": "npm run lint:eslint:fix -- server",
+    "security": "npm run lint && npm audit",
+    "docker-build": "docker-compose build",
+    "docker-up": "docker-compose up $npm_package_config_dockerservices",
+    "docker-migrate-up": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-up && npm run pg-seed",
+    "docker-migrate-down": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-down",
     "travis": "$npm_package_scripts_test --maxWorkers=4",
     "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles",
     "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
@@ -14,7 +21,23 @@
     "pg-down": "knex migrate:rollback --knexfile ./db/config.js",
     "pg-make": "knex migrate:make $NAME --knexfile ./db/config.js",
     "pg-seed": "knex seed:run --knexfile ./db/config.js",
-    "pg-up": "knex migrate:latest --knexfile ./db/config.js"
+    "pg-up": "knex migrate:latest --knexfile ./db/config.js",
+    "lint:eslint": "eslint --ignore-path !./.eslintrc.js --ignore-path .gitignore --ignore-pattern internals/scripts",
+    "lint:eslint:fix": "eslint --ignore-path !./.eslintrc.js --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
+    "prettify": "prettier --write"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:eslint:fix",
+      "git add --force"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add --force"
+    ]
+  },
+  "config": {
+    "dockerservices": "kuhts-postgres kuhts-redis"
   },
   "engines": {
     "npm": ">=6.4.1",
@@ -26,6 +49,7 @@
     "connect-redis": "^3.4.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
+    "debug": "^4.1.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-boom": "^2.0.0",
@@ -33,7 +57,6 @@
     "jest": "^24.1.0",
     "knex": "^0.15.2",
     "lodash": "^4.17.11",
-    "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
@@ -52,8 +75,11 @@
   "author": "maikelmclauflin",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "cross-env": "^5.2.0",
+    "eslint": "^5.14.1",
     "nodemon": "^1.18.10",
-    "passport-mock": "0.0.3"
+    "passport-mock": "0.0.3",
+    "prettier": "^1.16.4"
   }
 }

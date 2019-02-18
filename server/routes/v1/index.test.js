@@ -8,5 +8,5 @@ test('does allow unauthed users to get public data', async () => {
     .get('/v1/api/wake-up')
     .expect(200)
 
-   expect(response.text).toBe('👍')
+  expect(response.text).toBe('👍')
 })

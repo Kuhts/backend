@@ -33,8 +33,9 @@ function publicize(user) {
   return omit(whitelisted, blacklist)
 }
 
-function users() {
-  return connection('users')
+async function users() {
+  const db = await connection
+  return db('users')
 }
 
 function removeProvider(user, key) {
@@ -92,11 +93,12 @@ function sterilize(user) {
   return omit(user, ['id'])
 }
 
-function getByProvider({
+async function getByProvider({
   provider,
   key,
 }) {
-  const raw = connection.raw('providers @> :providers', {
+  const db = await connection
+  const raw = db.raw('providers @> :providers', {
     providers: JSON.stringify({
       [provider]: {
         key,

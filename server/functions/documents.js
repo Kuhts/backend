@@ -7,7 +7,7 @@ const columns = [
   'updated_at',
   'id',
   'name',
-  'pathname',
+  'pathname'
   // 'author',
   // 'userId',
 ]
@@ -35,7 +35,7 @@ function get(req, res) {
     userId: req.user.id,
     'documents.pathname': req.params.id,
   })
-  .then((doc) => res.json(doc))
+    .then((doc) => res.json(doc))
 }
 
 function create(req, res) {
@@ -47,18 +47,18 @@ function create(req, res) {
 
 function getMany(req, res) {
   const {
-    query,
+    // query,
     user,
   } = req
   const {
     id: userId,
   } = user
-  const {
-    results,
-    page,
-    sortField,
-    sortOrder,
-  } = query
+  // const {
+  //   results,
+  //   page,
+  //   sortField,
+  //   sortOrder,
+  // } = query
   const selectors = {
     userId,
   }
@@ -66,7 +66,7 @@ function getMany(req, res) {
     documents.getMany(docColumns, selectors),
     documents.count({
       userId,
-    }),
+    })
   ]).then((results) => {
     const data = results[0]
     const total = results[1]

@@ -42,8 +42,9 @@ function create(userId, doc) {
     .then((docs) => docs[0])
 }
 
-function table() {
-  return connection('documents')
+async function table() {
+  const db = await connection
+  return db('documents')
 }
 
 function joinedDocuments() {

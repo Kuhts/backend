@@ -40,8 +40,9 @@ function create(userId, doc) {
     .then((docs) => docs[0])
 }
 
-function table() {
-  return connection('movements')
+async function table() {
+  const db = await connection
+  return db('movements')
 }
 
 function joinedMovements() {

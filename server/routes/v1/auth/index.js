@@ -1,11 +1,8 @@
 const facebook = require('server/routes/v1/auth/facebook')
 const github = require('server/routes/v1/auth/github')
 const google = require('server/routes/v1/auth/google')
-const local = require('server/routes/v1/auth/local')
 const medium = require('server/routes/v1/auth/medium')
 const reddit = require('server/routes/v1/auth/reddit')
-const twitter = require('server/routes/v1/auth/twitter')
-const functions = require('server/functions')
 const {
   user,
 } = require('db/queries')
@@ -48,4 +45,4 @@ router.get('/check', (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout()
   res.json({})
-});
+})

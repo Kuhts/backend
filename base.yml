@@ -1,0 +1,13 @@
+version: "2.1"
+
+services:
+  kuhts:
+    image: kuhts
+    build: .
+    restart: always
+    environment:
+      - "DATABASE_URL=postgres://kuhts:password@kuhts-postgres/kuhts"
+      - DEBUG
+      - DEBUG_COLORS
+      - HEROKU_SLUG_COMMIT
+      - PORT
