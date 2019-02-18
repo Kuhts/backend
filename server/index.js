@@ -52,7 +52,9 @@ app.use(express.json())
 // before we have athenticated the user
 const store = new RedisStore({
   url: REDIS_URL,
-  client: redis.createClient(REDIS_URL),
+  client: redis.createClient({
+    url: REDIS_URL,
+  }),
 })
 app.use(session({
   store,
