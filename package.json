@@ -7,7 +7,7 @@
     "travis": "npm t -- --runInBand --maxWorkers=4",
     "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles",
     "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
-    "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./server",
+    "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./bin/",
     "down": "npm run pg-down && npm run redis-down",
     "up": "npm run pg-up && npm run pg-seed",
     "redis-down": "redis-cli flushall",

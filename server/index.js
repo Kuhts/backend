@@ -101,6 +101,7 @@ function start(port = PORT) {
       if (err) {
         reject(err)
       } else {
+        console.log(`listening on ${port}`)
         resolve(app)
       }
     })
