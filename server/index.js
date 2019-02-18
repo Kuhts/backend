@@ -71,7 +71,7 @@ const store = new RedisStore({
 // })
 app.use(cors({
   credentials: true,
-  origin: CLIENT_ORIGIN,
+  origin: true,
   optionsSuccessStatus: 200,
 }))
 
