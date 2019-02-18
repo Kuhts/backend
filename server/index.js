@@ -56,6 +56,7 @@ let client = null
 if (REDISTOGO_URL) {
     // TODO: redistogo connection
   const parsed = url.parse(REDISTOGO_URL);
+  console.log(parsed)
   client = redis.createClient(parsed.port, parsed.hostname);
 
   client.auth(parsed.auth.split(":")[1]);
