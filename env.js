@@ -25,7 +25,7 @@ const {
   REDDIT_SECRET,
   REDIS_URL,
   REDISTOGO_URL,
-  DOMAIN = `${appname}-api.herokuapp.com`,
+  DOMAIN,
   DATABASE_URL = `postgresql://localhost/${appname}`,
 } = process.env
 
