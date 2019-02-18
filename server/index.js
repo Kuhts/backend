@@ -27,7 +27,7 @@ const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
   NODE_ENV,
-  REDIS_URL,
+  REDISTOGO_URL,
   PORT,
 } = require('env')
 
@@ -51,9 +51,9 @@ if (NODE_ENV === 'production') {
 app.use(boom())
 app.use(express.json())
 let client = null
-if (process.env.REDIS_URL) {
+if (REDISTOGO_URL) {
     // TODO: redistogo connection
-  const parsed = url.parse(process.env.REDIS_URL);
+  const parsed = url.parse(REDISTOGO_URL);
   client = redis.createClient(parsed.port, parsed.hostname);
 
   client.auth(parsed.auth.split(":")[1]);
