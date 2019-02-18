@@ -1,4 +1,4 @@
-const key = 'documents'
+const key = 'equipment'
 
 exports.up = function(knex) {
   return knex.schema.hasTable(key).then((exists) => {
@@ -9,16 +9,9 @@ exports.up = function(knex) {
       table.uuid('id').primary()
       table.string('name').defaultTo('')
       table.text('description').defaultTo('')
-      table.string('pathname').defaultTo('')
-      table.jsonb('contents').defaultTo('[]')
-      table.jsonb('privacy').defaultTo('{}')
-      table.uuid('userId').notNullable()
+      table.string('image').defaultTo('')
+      table.string('link').defaultTo('')
       table.timestamps(true, true)
-      table
-        .foreign('userId')
-        .references('id')
-        .inTable('users')
-        .onDelete('CASCADE')
     })
   })
 }

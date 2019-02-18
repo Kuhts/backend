@@ -22,7 +22,7 @@ router.put('/user/', (req, res) => {
 })
 
 router.post('/documents/', documents.create)
-router.put('/documents/:id/write', documents.write)
+router.put('/documents/:id', documents.write)
 router.get('/documents/:id', documents.get)
 router.get('/documents/', documents.getMany)
 

@@ -90,7 +90,3 @@ function deserializeUser(id, cb) {
 function serializeUser(data, cb) {
   return cb(null, data.id)
 }
-
-// function localCallback(username, password, done) {
-//   console.log(username, password, done)
-// }

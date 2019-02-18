@@ -4,9 +4,14 @@
   "description": "Server for React/Node Social auth",
   "main": "server.js",
   "scripts": {
-    "dev": "npm run pg-up && NODE_PATH=./ nodemon ./server",
-    "start": "npm run pg-up && NODE_PATH=./ node ./server",
+    "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
+    "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./server",
+    "down": "npm run pg-down && npm run redis-down",
+    "up": "npm run pg-up && npm run pg-seed",
+    "redis-down": "redis-cli flushall",
     "pg-down": "knex migrate:rollback --knexfile ./db/config.js",
+    "pg-make": "knex migrate:make $NAME --knexfile ./db/config.js",
+    "pg-seed": "knex seed:run --knexfile ./db/config.js",
     "pg-up": "knex migrate:latest --knexfile ./db/config.js"
   },
   "engines": {
@@ -41,7 +46,7 @@
     "socket.io": "^2.2.0",
     "uuid": "^3.3.2"
   },
-  "author": "funador",
+  "author": "maikelmclauflin",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^1.18.10"

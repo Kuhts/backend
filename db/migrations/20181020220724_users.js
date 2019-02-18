@@ -1,6 +1,6 @@
 const key = 'users'
 
-exports.up = function(knex, Promise) {
+exports.up = function(knex) {
   return knex.schema.hasTable(key).then((exists) => {
     if (exists) {
       return
@@ -22,6 +22,6 @@ exports.up = function(knex, Promise) {
   })
 }
 
-exports.down = function(knex, Promise) {
+exports.down = function(knex) {
   return knex.schema.dropTableIfExists(key)
 }

@@ -1,4 +1,3 @@
-
 const {
   NODE_ENV,
   DATABASE_URL: connection,
@@ -12,33 +11,26 @@ const pool = {
 const migrations = {
   users: 'users',
   documents: 'documents',
+  movements: 'movements',
+  muscles: 'muscles',
+  equipment: 'equipment',
 }
 const config = {
-  client,
-  connection,
   pool,
+  client,
   migrations,
-  // debug: true,
+  connection,
+  debug: true,
   asyncStackTraces: true,
-  // // overly simplified snake_case -> camelCase converter
-  // postProcessResponse: (result, queryContext) => {
-  //   // TODO: add special case for raw results (depends on dialect)
-  //   if (Array.isArray(result)) {
-  //     return result.map(row => convertToCamel(row));
-  //   } else {
-  //     return convertToCamel(result);
-  //   }
-  // }
+  seeds: {
+    directory: './seeds/',
+  },
 }
 
-// function convertToCamel(row) {
-//   return _.mapKeys((value, key) => _.camelCase(key))
-// }
-
 const configs = {
-  development: config,
   staging: config,
-  production: config
+  production: config,
+  development: config,
 }
 
 configs.chosen = configs[NODE_ENV]
