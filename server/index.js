@@ -1,5 +1,4 @@
 const express = require('express')
-const url = require('url')
 const path = require('path')
 const fs = require('fs')
 const https = require('https')
@@ -9,12 +8,11 @@ const session = require('express-session')
 const cors = require('cors')
 const morgan = require('morgan')
 const socketio = require('socket.io')
-const redis = require('redis')
 const RedisStore = require('connect-redis')(session)
 const boom = require('express-boom')
 const db = require('db')
-// const cookieParser = require('cookie-parser')
 const routes = require('server/routes')
+const redis = require('redis')
 const helpers = require('server/helpers')
 try {
   const bluebird = require('bluebird')
@@ -27,16 +25,22 @@ try {
 const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
+  REDIS_URL,
   NODE_ENV,
   DOMAIN,
-  // REDISTOGO_URL,
-  REDIS_URL,
   PORT,
 } = require('env')
+
+const client = redis.createClient(REDIS_URL)
 
 const dir = process.cwd()
 const app = express()
 let server = null
+
+module.exports = {
+  start,
+  app,
+}
 
 if (NODE_ENV === 'production') {
   server = http.createServer(app)
@@ -53,22 +57,10 @@ if (NODE_ENV === 'production') {
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
-// app.use(cookieParser(SESSION_SECRET))
 
-const parsed = url.parse(REDIS_URL);
-const client = redis.createClient(parsed.port, parsed.hostname);
-if (parsed.auth) {
-  client.auth(parsed.auth.split(":")[1], (err) => {
-    console.log('auth error', err)
-  })
-}
 const store = new RedisStore({
   client,
 })
-// before we have athenticated the user
-// const store = new RedisStore({
-//   client,
-// })
 app.use(cors({
   credentials: true,
   origin: true,
@@ -87,11 +79,6 @@ app.use(session({
   } : {})
 }))
 
-app.use((req, res, next) => {
-  console.log(req.originalUrl)
-  next()
-})
-
 app.use(passport.initialize())
 app.use(passport.session())
 helpers.setup()
@@ -102,19 +89,20 @@ const io = socketio(server)
 app.set('io', io)
 // Catch a start up request so that a sleepy Heroku instance can
 // be responsive as soon as possible
-app.get('/wake-up', (req, res) => res.send('👍'))
 // Direct all other requests at our router
 app.use('/', routes)
 app.get('/', (req, res, next) => {
   res.status(200).send('ack.')
 })
 
-// db.setup().then(() => (
-server.listen(PORT, (err) => {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log(`listening on ${PORT}`)
-  }
-})
-// ))
+function start(port = PORT) {
+  return new Promise((resolve, reject) => (
+    server.listen(port, (err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(app)
+      }
+    })
+  ))
+}

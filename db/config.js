@@ -28,11 +28,12 @@ const config = {
 }
 
 const configs = {
+  env: NODE_ENV,
   staging: config,
   production: config,
   development: config,
+  test: config,
 }
-
 configs.chosen = configs[NODE_ENV]
 
 module.exports = configs

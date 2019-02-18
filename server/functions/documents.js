@@ -67,7 +67,9 @@ function getMany(req, res) {
     documents.count({
       userId,
     }),
-  ]).then(([data, total]) => {
+  ]).then((results) => {
+    const data = results[0]
+    const total = results[1]
     res.json({
       data,
       total: total[0].count,

@@ -25,7 +25,7 @@ function write(id, contents) {
       id,
     })
     .returning('*')
-    .then(([doc]) => doc)
+    .then((docs) => docs[0])
 }
 
 function create(userId, doc) {
@@ -36,18 +36,18 @@ function create(userId, doc) {
     pathname,
     userId,
   }, doc)
-  return connection('documents')
+  return table()
     .insert(docu)
     .returning('*')
-    .then(([doc]) => doc)
+    .then((docs) => docs[0])
 }
 
-function docs() {
+function table() {
   return connection('documents')
 }
 
 function joinedDocuments() {
-  return docs()
+  return table()
     .join('users', 'documents.userId', '=', 'users.id')
     .select({
       author: 'users.username',
@@ -67,7 +67,7 @@ function getMany(columns, where) {
 }
 
 function count(select) {
-  return connection('documents')
+  return table()
     .where(select)
     .countDistinct('id')
 }

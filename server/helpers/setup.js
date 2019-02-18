@@ -2,29 +2,7 @@ const passport = require('passport')
 const {
   isEqual,
 } = require('lodash')
-const {
-  Strategy: TwitterStrategy,
-} = require('passport-twitter')
-const {
-  Strategy: LocalStrategy,
-} = require('passport-local')
-const {
-  OAuth2Strategy: GoogleStrategy,
-} = require('passport-google-oauth')
-const {
-  Strategy: FacebookStrategy,
-} = require('passport-facebook')
-const {
-  Strategy: GithubStrategy,
-} = require('passport-github')
-const {
-  Strategy: RedditStrategy,
-} = require('passport-reddit')
-// const {
-//   Strategy: JwtStrategy,
-//   ExtractJwt,
-// } = require('passport-jwt')
-const OAuth2Strategy = require('passport-oauth2')
+const strategies = require('server/helpers/strategies')
 const env = require('env')
 const {
   TWITTER_CONFIG,
@@ -47,17 +25,25 @@ const auth = require('./auth')
 module.exports = setup
 
 function setup () {
+  const {
+    Twitter,
+    Google,
+    Facebook,
+    Github,
+    Reddit,
+    Medium,
+  } = strategies
   // Allowing passport to serialize and deserialize users into sessions
   passport.serializeUser(serializeUser)
   passport.deserializeUser(deserializeUser)
   // Adding each OAuth provider's strategy to passport
-  passport.use(new TwitterStrategy(TWITTER_CONFIG, callback))
-  passport.use(new GoogleStrategy(GOOGLE_CONFIG, callback))
-  passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback))
-  passport.use(new GithubStrategy(GITHUB_CONFIG, callback))
-  passport.use(new RedditStrategy(REDDIT_CONFIG, callback))
+  passport.use(new Twitter(TWITTER_CONFIG, callback))
+  passport.use(new Google(GOOGLE_CONFIG, callback))
+  passport.use(new Facebook(FACEBOOK_CONFIG, callback))
+  passport.use(new Github(GITHUB_CONFIG, callback))
+  passport.use(new Reddit(REDDIT_CONFIG, callback))
   // passport.use(new JwtStrategy(JWT_CONFIG, callback))
-  passport.use('medium', new OAuth2Strategy(MEDIUM_CONFIG, callback))
+  passport.use('medium', new Medium(MEDIUM_CONFIG, callback))
   // passport.use(new LocalStrategy(localCallback))
 }
 // The callback that is invoked when an OAuth provider sends back user
