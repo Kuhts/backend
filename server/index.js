@@ -61,13 +61,13 @@ if (REDISTOGO_URL) {
     // TODO: redistogo connection
   const parsed = url.parse(REDISTOGO_URL);
   console.log(parsed)
-  client = redis.createClient(parsed.port, parsed.hostname);
+  // client = redis.createClient(parsed.port, parsed.hostname);
 
-  client.auth(parsed.auth.split(":")[1]);
+  // client.auth(parsed.auth.split(":")[1]);
   store = new RedisStore({
     port: parsed.port,
     host: parsed.hostname,
-    pass: parsed.auth.split(':')[0],
+    pass: parsed.auth.split(':')[1],
   })
 } else {
   store = new RedisStore({
