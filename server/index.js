@@ -52,6 +52,7 @@ if (NODE_ENV === 'production') {
 app.use(boom())
 app.use(express.json())
 app.use(cookieParser())
+console.log('redis url',REDIS_URL)
 const client = redis.createClient({
   url: REDIS_URL,
 })
