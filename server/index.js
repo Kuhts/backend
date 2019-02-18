@@ -32,14 +32,15 @@ const {
 } = require('env')
 
 const client = redis.createClient(REDIS_URL)
+const app = express()
 
 const dir = process.cwd()
-const app = express()
 let server = null
 
 module.exports = {
   start,
   app,
+  client,
 }
 
 if (NODE_ENV === 'production') {

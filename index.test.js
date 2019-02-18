@@ -1,10 +1,8 @@
 const path = require('path')
 const {
   start,
-} = require('server')
-const {
   client,
-} = require('server/redis')
+} = require('server')
 const knex = require('db/connection')
 const migrations = {
   migrations: path.join(__dirname, '..', 'db', 'migrations'),

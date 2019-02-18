@@ -4,7 +4,7 @@
   "description": "Server for React/Node Social auth",
   "main": "server.js",
   "scripts": {
-    "travis": "npm t -- --runInBand --maxWorkers=4",
+    "travis": "$npm_package_scripts_test --maxWorkers=4",
     "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles",
     "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
     "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./bin/",
