@@ -52,10 +52,9 @@ if (NODE_ENV === 'production') {
 app.use(boom())
 app.use(express.json())
 app.use(cookieParser())
-console.log('redis url',REDIS_URL)
-const client = redis.createClient({
-  url: REDIS_URL,
-})
+// const client = redis.createClient({
+//   url: REDIS_URL,
+// })
 // let client = null
 // if (REDISTOGO_URL) {
 //     // TODO: redistogo connection
@@ -68,7 +67,9 @@ const client = redis.createClient({
 //    client = redis.createClient()
 // }
 // before we have athenticated the user
-const store = new RedisStore({ client, })
+const store = new RedisStore({
+  url: REDIS_URL,
+})
 app.use(session({
   store,
   secret: SESSION_SECRET,
