@@ -20,6 +20,10 @@ const {
 const {
   Strategy: RedditStrategy,
 } = require('passport-reddit')
+// const {
+//   Strategy: JwtStrategy,
+//   ExtractJwt,
+// } = require('passport-jwt')
 const OAuth2Strategy = require('passport-oauth2')
 const env = require('env')
 const {
@@ -52,6 +56,7 @@ function setup () {
   passport.use(new FacebookStrategy(FACEBOOK_CONFIG, callback))
   passport.use(new GithubStrategy(GITHUB_CONFIG, callback))
   passport.use(new RedditStrategy(REDDIT_CONFIG, callback))
+  // passport.use(new JwtStrategy(JWT_CONFIG, callback))
   passport.use('medium', new OAuth2Strategy(MEDIUM_CONFIG, callback))
   // passport.use(new LocalStrategy(localCallback))
 }

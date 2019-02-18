@@ -25,12 +25,12 @@ const {
   REDDIT_SECRET,
   REDIS_URL,
   REDISTOGO_URL,
+  DOMAIN = `${appname}-api.herokuapp.com`,
   DATABASE_URL = `postgresql://localhost/${appname}`,
 } = process.env
 
 const PROD = NODE_ENV === 'production'
 
-const DOMAIN = `${appname}-api.herokuapp.com`
 const DIR = process.cwd()
 
 // const PROVIDERS = ['twitter', 'google', 'facebook', 'github', 'medium']
@@ -93,6 +93,12 @@ const REDDIT_CONFIG = config({
   clientSecret: REDDIT_SECRET,
   callbackURL: redditURL,
 })
+// const JWT_CONFIG = config({
+//   audience: CLIENT_ORIGIN,
+//   issuer: DOMAIN,
+//   secretOrKey: SESSION_SECRET,
+//   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+// })
 
 process.on('captureException', captureException)
 process.on('unhandledRejection', captureException)

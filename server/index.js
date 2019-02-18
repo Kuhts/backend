@@ -13,7 +13,7 @@ const redis = require('redis')
 const RedisStore = require('connect-redis')(session)
 const boom = require('express-boom')
 const db = require('db')
-const cookieParser = require('cookie-parser')
+// const cookieParser = require('cookie-parser')
 const routes = require('server/routes')
 const helpers = require('server/helpers')
 try {
@@ -28,6 +28,7 @@ const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
   NODE_ENV,
+  DOMAIN,
   // REDISTOGO_URL,
   REDIS_URL,
   PORT,
@@ -52,7 +53,7 @@ if (NODE_ENV === 'production') {
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
-app.use(cookieParser(SESSION_SECRET))
+// app.use(cookieParser(SESSION_SECRET))
 
 const parsed = url.parse(REDIS_URL);
 const client = redis.createClient(parsed.port, parsed.hostname);
@@ -68,23 +69,20 @@ const store = new RedisStore({
 // const store = new RedisStore({
 //   client,
 // })
+app.use(cors({
+  credentials: true,
+  origin: CLIENT_ORIGIN,
+  optionsSuccessStatus: 200,
+}))
+
 app.use(session({
   store,
   secret: SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
   cookie: {
-    sameSite: true,
-    httpOnly: true,
-    secure: true,
-    maxAge: 1000 * 60 * 60 * 24 * 2,
+    secure: 'auto',
   },
-}))
-
-app.use(cors({
-  credentials: true,
-  origin: CLIENT_ORIGIN,
-  optionsSuccessStatus: 200,
 }))
 
 app.use((req, res, next) => {
