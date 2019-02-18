@@ -103,6 +103,9 @@ app.set('io', io)
 app.get('/wake-up', (req, res) => res.send('👍'))
 // Direct all other requests at our router
 app.use('/', routes)
+app.get('/', (req, res, next) => {
+  res.status(200).send('ack.')
+})
 
 // db.setup().then(() => (
 server.listen(PORT, (err) => {
