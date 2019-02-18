@@ -75,9 +75,9 @@ if (REDISTOGO_URL) {
   })
 }
 // before we have athenticated the user
-const store = new RedisStore({
-  client,
-})
+// const store = new RedisStore({
+//   client,
+// })
 app.use(session({
   store,
   secret: SESSION_SECRET,
