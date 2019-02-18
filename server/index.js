@@ -28,6 +28,7 @@ const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
   NODE_ENV,
+  REDISTOGO_URL,
   REDIS_URL,
   PORT,
 } = require('env')
@@ -55,20 +56,20 @@ app.use(cookieParser())
 // const client = redis.createClient({
 //   url: REDIS_URL,
 // })
-// let client = null
-// if (REDISTOGO_URL) {
-//     // TODO: redistogo connection
-//   const parsed = url.parse(REDISTOGO_URL);
-//   console.log(parsed)
-//   client = redis.createClient(parsed.port, parsed.hostname);
+let client = null
+if (REDISTOGO_URL) {
+    // TODO: redistogo connection
+  const parsed = url.parse(REDISTOGO_URL);
+  console.log(parsed)
+  client = redis.createClient(parsed.port, parsed.hostname);
 
-//   client.auth(parsed.auth.split(":")[1]);
-// } else {
-//    client = redis.createClient()
-// }
+  client.auth(parsed.auth.split(":")[1]);
+} else {
+   client = redis.createClient()
+}
 // before we have athenticated the user
 const store = new RedisStore({
-  url: REDIS_URL,
+  client,
 })
 app.use(session({
   store,
