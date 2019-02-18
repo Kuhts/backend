@@ -52,7 +52,9 @@ if (NODE_ENV === 'production') {
 app.use(boom())
 app.use(express.json())
 app.use(cookieParser())
-const client = redis.createClient(REDIS_URL)
+const client = redis.createClient({
+  url: REDIS_URL,
+})
 // let client = null
 // if (REDISTOGO_URL) {
 //     // TODO: redistogo connection
