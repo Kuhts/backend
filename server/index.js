@@ -56,24 +56,25 @@ app.use(cookieParser())
 // const client = redis.createClient({
 //   url: REDIS_URL,
 // })
-let store = null
+let client = null
 if (REDISTOGO_URL) {
     // TODO: redistogo connection
   const parsed = url.parse(REDISTOGO_URL);
   console.log(parsed)
-  // client = redis.createClient(parsed.port, parsed.hostname);
+  client = redis.createClient(parsed.port, parsed.hostname);
 
-  // client.auth(parsed.auth.split(":")[1]);
+  client.auth(parsed.auth.split(":")[1], (err) => {
+    console.log('auth error', err)
+  })
   store = new RedisStore({
-    port: parsed.port,
-    host: parsed.hostname,
-    pass: parsed.auth.split(':')[1],
+    client,
   })
 } else {
-  store = new RedisStore({
-    client: redis.createClient(),
-  })
+  client = redis.createClient()
 }
+const store = new RedisStore({
+  client,
+})
 // before we have athenticated the user
 // const store = new RedisStore({
 //   client,
