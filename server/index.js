@@ -1,4 +1,5 @@
 const express = require('express')
+const url = require('url')
 const path = require('path')
 const fs = require('fs')
 const https = require('https')
@@ -49,12 +50,18 @@ if (NODE_ENV === 'production') {
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
+let client = null
+if (process.env.REDIS_URL) {
+    // TODO: redistogo connection
+  const parsed = url.parse(process.env.REDIS_URL);
+  client = redis.createClient(parsed.port, parsed.hostname);
+
+  client.auth(parsed.auth.split(":")[1]);
+} else {
+   client = redis.createClient();
+}
 // before we have athenticated the user
-const store = new RedisStore({
-  client: redis.createClient({
-    url: REDIS_URL,
-  }),
-})
+const store = new RedisStore({ client, })
 app.use(session({
   store,
   secret: SESSION_SECRET,
