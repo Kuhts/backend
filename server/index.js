@@ -28,7 +28,7 @@ const {
   CLIENT_ORIGIN,
   SESSION_SECRET,
   NODE_ENV,
-  REDISTOGO_URL,
+  REDIS_URL,
   PORT,
 } = require('env')
 
@@ -52,17 +52,18 @@ if (NODE_ENV === 'production') {
 app.use(boom())
 app.use(express.json())
 app.use(cookieParser())
-let client = null
-if (REDISTOGO_URL) {
-    // TODO: redistogo connection
-  const parsed = url.parse(REDISTOGO_URL);
-  console.log(parsed)
-  client = redis.createClient(parsed.port, parsed.hostname);
+const client = redis.createClient(REDIS_URL)
+// let client = null
+// if (REDISTOGO_URL) {
+//     // TODO: redistogo connection
+//   const parsed = url.parse(REDISTOGO_URL);
+//   console.log(parsed)
+//   client = redis.createClient(parsed.port, parsed.hostname);
 
-  client.auth(parsed.auth.split(":")[1]);
-} else {
-   client = redis.createClient();
-}
+//   client.auth(parsed.auth.split(":")[1]);
+// } else {
+//    client = redis.createClient()
+// }
 // before we have athenticated the user
 const store = new RedisStore({ client, })
 app.use(session({
@@ -71,10 +72,10 @@ app.use(session({
   resave: false,
   httpOnly: true,
   saveUninitialized: true,
-  // cookie: {
-  //   secure: true,
-  //   maxAge: 1000 * 60 * 60 * 24,
-  // },
+  cookie: {
+    secure: true,
+    maxAge: 1000 * 60 * 60 * 24 * 2,
+  },
 }))
 
 app.use(cors({

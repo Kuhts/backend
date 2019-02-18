@@ -23,6 +23,8 @@ const {
   MEDIUM_SECRET,
   REDDIT_KEY,
   REDDIT_SECRET,
+  REDIS_URL,
+  REDISTOGO_URL,
   DATABASE_URL = `postgresql://localhost/${appname}`,
 } = process.env
 
@@ -123,6 +125,8 @@ module.exports = {
   REDDIT_KEY,
   REDDIT_SECRET,
   DATABASE_URL,
+  REDISTOGO_URL,
+  REDIS_URL,
 }
 
 function config(config) {
