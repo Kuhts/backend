@@ -66,9 +66,6 @@ if (REDISTOGO_URL) {
   client.auth(parsed.auth.split(":")[1], (err) => {
     console.log('auth error', err)
   })
-  store = new RedisStore({
-    client,
-  })
 } else {
   client = redis.createClient()
 }
