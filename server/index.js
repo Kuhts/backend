@@ -52,7 +52,7 @@ if (NODE_ENV === 'production') {
 // Setup for passport and to accept JSON objects
 app.use(boom())
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser(SESSION_SECRET))
 
 const parsed = url.parse(REDIS_URL);
 const client = redis.createClient(parsed.port, parsed.hostname);
@@ -71,9 +71,10 @@ const store = new RedisStore({
 app.use(session({
   store,
   secret: SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {
+    sameSite: true,
     httpOnly: true,
     secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 2,
