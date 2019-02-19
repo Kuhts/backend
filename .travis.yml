@@ -10,6 +10,7 @@ before_script:
   - npm run docker-build
   - docker-compose up -d kuhts-postgres
   - sleep 3
+  - npm run create-db
   - npm run docker-migrate-up
   # bring up the relevant services
   - npm run docker-up-detached

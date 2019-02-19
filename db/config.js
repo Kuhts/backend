@@ -1,7 +1,8 @@
 const {
   NODE_ENV,
   DATABASE_URL: connection,
-} = require('../env')
+} = require('env')
+const log = require('log')
 
 const client = 'postgresql'
 const pool = {
@@ -35,4 +36,5 @@ const configs = {
   test: config,
 }
 configs.chosen = configs[NODE_ENV]
+log.db(configs.chosen)
 module.exports = configs
