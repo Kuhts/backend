@@ -24,11 +24,15 @@ async function create() {
     password: parsed.auth.split(':')[1],
     user: parsed.auth.split(':')[0],
   })
-  console.log('connecting client')
-  await client.connect()
-
-  const database = 'kuhts'
-  console.log('creating db')
-  await client.query(`CREATE DATABASE ${database};`)
-  await client.end()
+  try {
+    console.log('connecting client')
+    await client.connect()
+    const database = 'kuhts'
+    console.log('creating db')
+    await client.query(`CREATE DATABASE ${database};`)
+  } catch (e) {
+    console.log(e)
+  } finally {
+    await client.end()
+  }
 }
