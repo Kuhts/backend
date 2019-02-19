@@ -2,7 +2,7 @@ const passport = require('passport')
 const strategies = require('server/helpers/strategies')
 const env = require('env')
 const {
-  TWITTER_CONFIG,
+  // TWITTER_CONFIG,
   GOOGLE_CONFIG,
   FACEBOOK_CONFIG,
   GITHUB_CONFIG,
