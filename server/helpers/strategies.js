@@ -2,9 +2,9 @@ const {
   NODE_ENV,
 } = require('env')
 const OAuth2Strategy = require('passport-oauth2')
-const {
-  Strategy: TwitterStrategy,
-} = require('passport-twitter')
+// const {
+//   Strategy: TwitterStrategy,
+// } = require('passport-twitter')
 const {
   Strategy: LocalStrategy,
 } = require('passport-local')
@@ -35,7 +35,7 @@ if (NODE_ENV === 'test') {
   }
 // } else {
 //   strategies = {
-//     Twitter: TwitterStrategy,
+//     // Twitter: TwitterStrategy,
 //     Local: LocalStrategy,
 //     Google: GoogleStrategy,
 //     Facebook: FacebookStrategy,
@@ -46,7 +46,7 @@ if (NODE_ENV === 'test') {
 }
 
 strategies = {
-  Twitter: TwitterStrategy,
+  // Twitter: TwitterStrategy,
   Local: LocalStrategy,
   Google: GoogleStrategy,
   Facebook: FacebookStrategy,
