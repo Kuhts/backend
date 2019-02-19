@@ -2,7 +2,7 @@ const passport = require('passport')
 const strategies = require('server/helpers/strategies')
 const env = require('env')
 const {
-  // TWITTER_CONFIG,
+  TWITTER_CONFIG,
   GOOGLE_CONFIG,
   FACEBOOK_CONFIG,
   GITHUB_CONFIG,
@@ -16,6 +16,7 @@ module.exports = setup
 
 function setup () {
   const {
+    Twitter,
     Google,
     Facebook,
     Github,
@@ -26,6 +27,7 @@ function setup () {
   passport.serializeUser(serializeUser)
   passport.deserializeUser(deserializeUser)
   // Adding each OAuth provider's strategy to passport
+  passport.use(new Twitter(TWITTER_CONFIG, callback))
   passport.use(new Google(GOOGLE_CONFIG, callback))
   passport.use(new Facebook(FACEBOOK_CONFIG, callback))
   passport.use(new Github(GITHUB_CONFIG, callback))
