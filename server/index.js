@@ -25,9 +25,9 @@ try {
   log.message(e)
 }
 const {
+  SECURE,
   SESSION_SECRET,
   REDIS_URL,
-  NODE_ENV,
   DOMAIN,
   PORT,
 } = require('env')
@@ -44,7 +44,7 @@ module.exports = {
   client,
 }
 
-if (NODE_ENV === 'production') {
+if (!SECURE) {
   server = http.createServer(app)
 } else {
   const serverKey = path.join(dir, 'certs', 'server.key')

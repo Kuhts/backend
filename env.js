@@ -9,6 +9,7 @@ const appname = 'kuhts'
 const {
   PORT = 8080,
   NODE_ENV,
+  SECURE,
   // CLIENT_ORIGIN,
   SESSION_SECRET,
   TWITTER_KEY,
@@ -110,6 +111,7 @@ module.exports = {
   REDDIT_CONFIG,
   PROD,
   PORT,
+  SECURE: SECURE === 'true',
   NODE_ENV,
   SESSION_SECRET,
   TWITTER_KEY,

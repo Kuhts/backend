@@ -35,6 +35,7 @@ const configs = {
   development: config,
   test: config,
 }
-configs.chosen = configs[NODE_ENV]
-log.db(configs.chosen)
+const chosen = configs[NODE_ENV]
+configs.chosen = chosen
+log.db(chosen)
 module.exports = configs
