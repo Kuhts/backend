@@ -1,6 +1,6 @@
 
-const auth = require('./auth')
-const workouts = require('./workouts')
+const auth = require('server/functions/auth')
+const workouts = require('server/functions/workouts')
 module.exports = {
   auth,
   workouts,

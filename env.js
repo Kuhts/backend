@@ -9,7 +9,7 @@ const appname = 'kuhts'
 const {
   PORT = 8080,
   NODE_ENV,
-  CLIENT_ORIGIN,
+  // CLIENT_ORIGIN,
   SESSION_SECRET,
   TWITTER_KEY,
   TWITTER_SECRET,
@@ -93,12 +93,6 @@ const REDDIT_CONFIG = config({
   clientSecret: REDDIT_SECRET,
   callbackURL: redditURL,
 })
-// const JWT_CONFIG = config({
-//   audience: CLIENT_ORIGIN,
-//   issuer: DOMAIN,
-//   secretOrKey: SESSION_SECRET,
-//   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-// })
 
 process.on('captureException', captureException)
 process.on('unhandledRejection', captureException)
@@ -107,7 +101,7 @@ module.exports = {
   DOMAIN,
   DIR,
   PROVIDERS,
-  CLIENT_ORIGIN,
+  // CLIENT_ORIGIN,
   TWITTER_CONFIG,
   GOOGLE_CONFIG,
   FACEBOOK_CONFIG,

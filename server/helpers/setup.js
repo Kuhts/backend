@@ -9,7 +9,7 @@ const {
   MEDIUM_CONFIG,
   REDDIT_CONFIG,
 } = env
-const toProvider = require('./to-provider')
+const toProvider = require('server/helpers/to-provider')
 const users = require('db/queries/users')
 
 module.exports = setup

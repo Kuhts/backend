@@ -24,3 +24,11 @@ services:
 cache:
   directories:
     - node_modules
+
+env:
+  global:
+    - "DATABASE_URL=postgres://kuhts:password@localhost:3011/kuhts"
+    - "REDIS_URL=redis://localhost:3010"
+    - "SESSION_SECRET=4fd0aa45-a508-476e-b4e1-73740d684af0"
+    - "NODE_PATH=./"
+    - "DEBUG=*,-express*,kuhts,-socket.io*,-eslint*,-babel*,-snapdragon*,-knex*"
