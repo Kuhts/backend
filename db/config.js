@@ -1,8 +1,8 @@
 const {
   NODE_ENV,
   DATABASE_URL: connection,
-} = require('env')
-const log = require('log')
+} = require('../env')
+const log = require('../log')
 
 const client = 'postgresql'
 const pool = {
