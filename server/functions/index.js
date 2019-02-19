@@ -1,7 +1,7 @@
 
 const auth = require('./auth')
-const documents = require('./documents')
+const workouts = require('./workouts')
 module.exports = {
   auth,
-  documents,
+  workouts,
 }

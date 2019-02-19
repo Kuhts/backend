@@ -10,7 +10,7 @@ const {
   REDDIT_CONFIG,
 } = env
 const toProvider = require('./to-provider')
-const user = require('db/queries/user')
+const users = require('db/queries/users')
 
 module.exports = setup
 
@@ -48,13 +48,13 @@ function callback(req, accessToken, refreshToken, profile, cb) {
 
 function merge(usr, prov) {
   const { provider, } = prov
-  return user.updateProvider(usr, provider, prov)
+  return users.updateProvider(usr, provider, prov)
 }
 
 function create(prov) {
   const { image, provider, } = prov
-  return user.getByProvider(prov)
-    .then((data) => data || user.create({
+  return users.getByProvider(prov)
+    .then((data) => data || users.create({
       image,
       providers: {
         [provider]: prov,
@@ -63,7 +63,7 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
-  return user.get({
+  return users.get({
     id,
   }).then(([user]) => cb(null, user)).catch(cb)
 }

@@ -1,7 +1,12 @@
 module.exports = {
+  collectCoverage: true,
   collectCoverageFrom: [
     'server/**/*',
-    'db/**/*.{js}'
+    'db/**/*.js',
+    '!db/**/seeds/*',
+    '!db/**/migrations/*',
+    '!server/index.js',
+    '!**/node_modules/**'
   ],
   coverageThreshold: {
     global: {
@@ -18,7 +23,7 @@ module.exports = {
   //     '<rootDir>/internals/mocks/image.js',
   // },
   // setupFilesAfterEnv: ['<rootDir>/internals/testing/test-bundler.js'],
-  // setupFiles: ['raf/polyfill', '<rootDir>/internals/testing/enzyme-setup.js'],
+  globalTeardown: './test-teardown.js',
   testRegex: '.*\\.test\\.js$',
   // snapshotSerializers: ['enzyme-to-json/serializer'],
 }

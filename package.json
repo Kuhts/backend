@@ -11,8 +11,9 @@
     "docker-up": "docker-compose up $npm_package_config_dockerservices",
     "docker-migrate-up": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-up && npm run pg-seed",
     "docker-migrate-down": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-down",
+    "create-db": "node ./bin/create.js",
     "travis": "$npm_package_scripts_test --maxWorkers=4",
-    "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
     "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
     "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./bin/",
     "down": "npm run pg-down && npm run redis-down",
@@ -80,6 +81,7 @@
     "eslint": "^5.14.1",
     "nodemon": "^1.18.10",
     "passport-mock": "0.0.3",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "validator": "^10.11.0"
   }
 }

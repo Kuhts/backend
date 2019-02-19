@@ -1,5 +1,5 @@
 const {
-  documents,
+  workouts,
 } = require('db/queries')
 
 const columns = [
@@ -8,8 +8,6 @@ const columns = [
   'id',
   'name',
   'pathname'
-  // 'author',
-  // 'userId',
 ]
 const docColumns = makeDocCols(columns)
 module.exports = {
@@ -20,27 +18,27 @@ module.exports = {
 }
 
 function write(req, res) {
-  return documents
+  return workouts
     .write(req.params.id, req.body)
     .then(() => res.json({}))
 }
 
 function makeDocCols(columns) {
-  return columns.map((key) => `documents.${key}`)
+  return columns.map((key) => `workouts.${key}`)
 }
 
 function get(req, res) {
-  const cols = docColumns.concat(['documents.contents'])
-  return documents.get(cols, {
-    userId: req.user.id,
-    'documents.pathname': req.params.id,
+  const cols = docColumns.concat(['workouts.contents'])
+  return workouts.get(cols, {
+    user_id: req.user.id,
+    'workouts.pathname': req.params.id,
   })
     .then((doc) => res.json(doc))
 }
 
 function create(req, res) {
   const { body, user, } = req
-  return documents.create(user.id, body).then((doc) => {
+  return workouts.create(user.id, body).then((doc) => {
     res.json(doc)
   })
 }
@@ -51,7 +49,7 @@ function getMany(req, res) {
     user,
   } = req
   const {
-    id: userId,
+    id: user_id,
   } = user
   // const {
   //   results,
@@ -60,12 +58,12 @@ function getMany(req, res) {
   //   sortOrder,
   // } = query
   const selectors = {
-    userId,
+    user_id,
   }
   return Promise.all([
-    documents.getMany(docColumns, selectors),
-    documents.count({
-      userId,
+    workouts.getMany(docColumns, selectors),
+    workouts.count({
+      user_id,
     })
   ]).then((results) => {
     const data = results[0]

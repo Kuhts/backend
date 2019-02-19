@@ -6,6 +6,9 @@ const http = require('http')
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors')
+const {
+  assign,
+} = require('lodash')
 const socketio = require('socket.io')
 const RedisStore = require('connect-redis')(session)
 const boom = require('express-boom')
@@ -75,7 +78,7 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: Object.assign({
+  cookie: assign({
     path: '/',
   }, DOMAIN ? {
     domain: DOMAIN,

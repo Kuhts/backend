@@ -18,7 +18,7 @@ module.exports = movements
 
 function write(id, data) {
   return table()
-    .update(Object.assign(data))
+    .update(assign(data))
     .where({
       id,
     })
@@ -26,14 +26,14 @@ function write(id, data) {
     .then((docs) => docs[0])
 }
 
-function create(userId, doc) {
+function create(user_id, doc) {
   const id = uuid.v4()
   const pathname = doc.pathname || id
-  const docu = assign({
+  const docu = assign({}, doc, {
     id,
     pathname,
-    userId,
-  }, doc)
+    user_id,
+  })
   return table()
     .insert(docu)
     .returning('*')
@@ -41,28 +41,25 @@ function create(userId, doc) {
 }
 
 async function table() {
-  const db = await connection
-  return db('movements')
+  return connection('movements')
 }
 
-function joinedMovements() {
+function joinedMovements(moreUserData = {}) {
   return table()
-    .join('users', 'movements.userId', '=', 'users.id')
-    .select({
-      author: 'users.username',
-    })
+    .join('users', 'movements.user_id', 'users.id')
+    .select(assign({}, defaultUserData, moreUserData))
 }
 
-function selection(method, columns) {
-  return joinedMovements()[method](...columns)
+function selection(method, columns, moreUserData) {
+  return joinedMovements(moreUserData)[method](...columns)
 }
 
-function get(columns, where) {
-  return selection('first', columns).where(where)
+function get(where, columns, moreUserData) {
+  return selection('first', columns, moreUserData).where(where)
 }
 
-function getMany(columns, where) {
-  return selection('select', columns).where(where)
+function getMany(where, columns, moreUserData) {
+  return selection('select', columns, moreUserData).where(where)
 }
 
 function count(select) {

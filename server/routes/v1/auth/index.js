@@ -4,7 +4,7 @@ const google = require('server/routes/v1/auth/google')
 const medium = require('server/routes/v1/auth/medium')
 const reddit = require('server/routes/v1/auth/reddit')
 const {
-  user,
+  users,
 } = require('db/queries')
 
 const express = require('express')
@@ -15,7 +15,7 @@ module.exports = router
 router.get('/:id/detach', (req, res, next) => {
   const { params, user: usr, } = req
   const { id, } = params
-  return user.removeProvider(usr, id).then(() => {
+  return users.removeProvider(usr, id).then(() => {
     res.json({
       data: {
         container: 'user',

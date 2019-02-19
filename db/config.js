@@ -10,7 +10,7 @@ const pool = {
 }
 const migrations = {
   users: 'users',
-  documents: 'documents',
+  workouts: 'workouts',
   movements: 'movements',
   muscles: 'muscles',
   equipment: 'equipment',
@@ -20,7 +20,7 @@ const config = {
   client,
   migrations,
   connection,
-  debug: true,
+  // debug: true,
   asyncStackTraces: true,
   seeds: {
     directory: './seeds/',

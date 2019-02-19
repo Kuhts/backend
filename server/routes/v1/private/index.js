@@ -3,6 +3,6 @@ const router = new express.Router()
 module.exports = router
 
 const user = require('./user')
-const documents = require('./documents')
+const workouts = require('./workouts')
 router.use('/user', user)
-router.use('/documents', documents)
+router.use('/workouts', workouts)

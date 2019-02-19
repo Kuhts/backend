@@ -1,5 +1,7 @@
-// const Knex = require('knex')
 const PG = require('pg')
+const {
+  assign,
+} = require('lodash')
 const {
   parse,
 } = require('url')
@@ -10,34 +12,23 @@ create()
 module.exports = create
 
 async function create() {
-  const config = Object.assign({}, chosen)
+  const config = assign({}, chosen)
   const { connection, } = config
   delete config.connection
   const parsed = parse(connection)
-  console.log(parsed)
+  console.log('creating client')
   const client = new PG.Client({
     host: parsed.hostname,
     port: parsed.port,
-    database: '',
+    database: 'postgres',
     password: parsed.auth.split(':')[1],
     user: parsed.auth.split(':')[0],
   })
+  console.log('connecting client')
   await client.connect()
 
-
-  // connect without database selected
-  // var knex = Knex({
-  //   client: chosen.client,
-  //   connection: {
-  //     host: parsed.hostname,
-  //     port: parsed.port,
-  //     password: parsed.auth.split(':')[1],
-  //     user: parsed.auth.split(':')[0],
-  //   },
-  // })
   const database = 'kuhts'
+  console.log('creating db')
   await client.query(`CREATE DATABASE ${database};`)
-  // const raw = knex.raw(`CREATE DATABASE ${database};`)
-  // console.log(raw)
-
+  await client.end()
 }

@@ -8,8 +8,6 @@ const columns = [
   'id',
   'name',
   'pathname'
-  // 'author',
-  // 'userId',
 ]
 const docColumns = makeDocCols(columns)
 module.exports = {
@@ -32,7 +30,7 @@ function makeDocCols(columns) {
 function get(req, res) {
   const cols = docColumns.concat(['movements.contents'])
   return movements.get(cols, {
-    userId: req.user.id,
+    user_id: req.user.id,
     'movements.pathname': req.params.id,
   })
     .then((doc) => res.json(doc))
@@ -51,7 +49,7 @@ function getMany(req, res) {
     user,
   } = req
   const {
-    id: userId,
+    id: user_id,
   } = user
   // const {
   //   results,
@@ -60,12 +58,12 @@ function getMany(req, res) {
   //   sortOrder,
   // } = query
   const selectors = {
-    userId,
+    user_id,
   }
   return Promise.all([
     movements.getMany(docColumns, selectors),
     movements.count({
-      userId,
+      user_id,
     })
   ]).then((results) => {
     const data = results[0]

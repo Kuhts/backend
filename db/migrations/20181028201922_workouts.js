@@ -1,4 +1,4 @@
-const key = 'documents'
+const key = 'workouts'
 
 exports.up = function(knex) {
   return knex.schema.hasTable(key).then((exists) => {
@@ -12,10 +12,10 @@ exports.up = function(knex) {
       table.string('pathname').defaultTo('')
       table.jsonb('contents').defaultTo('[]')
       table.jsonb('privacy').defaultTo('{}')
-      table.uuid('userId').notNullable()
+      table.uuid('user_id').notNullable()
       table.timestamps(true, true)
       table
-        .foreign('userId')
+        .foreign('user_id')
         .references('id')
         .inTable('users')
         .onDelete('CASCADE')
