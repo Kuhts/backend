@@ -12,8 +12,6 @@ before_script:
   - sleep 3
   - npm run create-db
   - npm run docker-migrate-up
-  # bring up the relevant services
-  - npm run docker-up-detached
 
 script:
   - 'npm run travis'
