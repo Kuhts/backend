@@ -1,4 +1,3 @@
-const uuid = require('uuid')
 const {
   omit,
 } = require('lodash')
@@ -9,9 +8,6 @@ const {
 const {
   user,
 } = require('server/functions/auth')
-const {
-  message,
-} = require('log')
 
 const providerData = {
   provider: 'providername',
@@ -31,16 +27,16 @@ const original = {
   pathname: username,
   providers: {
     [providerData.provider]: {
-      key: providerData.key
-    }
-  }
+      key: providerData.key,
+    },
+  },
 }
 test('auth: looks up users by providers', async () => {
   const res = {
     body: null,
     json: function (json) {
       this.body = json
-    }
+    },
   }
   try {
     await create(original)
