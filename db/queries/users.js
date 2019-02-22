@@ -10,15 +10,13 @@ const {
 const {
   connection,
 } = require('db')
-const name = 'users'
 const generics = require('db/queries/generics')
-const crud = generics(table)
+const crud = generics('users')
 const users = {
   remove: crud.remove,
   update: crud.update,
   read: crud.read,
   create,
-  name,
   getByProvider,
   sterilize,
   updateProvider,
@@ -28,10 +26,6 @@ const users = {
 }
 
 module.exports = users
-
-function table() {
-  return connection(name)
-}
 
 function publicize(user) {
   const whitelist = ['username', 'pathname', 'image', 'email', 'phone', 'created_at']
@@ -83,7 +77,7 @@ async function getByProvider({
       },
     })
   })
-  return table()
+  return crud.table()
     .where(raw)
     .then((users) => users[0])
 }

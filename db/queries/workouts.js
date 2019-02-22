@@ -9,8 +9,7 @@ const {
   connection,
 } = require('db')
 const generics = require('db/queries/generics')
-const crud = generics(table)
-const name = 'workouts'
+const crud = generics('workouts')
 const defaultUserData = {
   'user.author': 'users.username',
 }
@@ -42,8 +41,4 @@ function create(user_id, wrkout = {}) {
     contents: queryableArray(wrkout.contents),
   })
   return crud.create(workout)
-}
-
-function table() {
-  return connection(name)
 }

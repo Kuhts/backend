@@ -3,14 +3,11 @@ const {
   omitTime,
 } = require('db/queries/helper')
 const {
-  connection,
-} = require('db')
-const {
   generics,
 } = require('db/queries')
 
 describe('generics (crud)', () => {
-  const crud = generics(() => connection('muscles'))
+  const crud = generics('muscles')
   test('can create and destroy', async () => {
     expect.assertions(0)
     const id = uuid.v4()

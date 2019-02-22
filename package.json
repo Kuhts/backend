@@ -9,11 +9,11 @@
     "security": "npm run lint && npm audit",
     "docker-build": "docker-compose build",
     "docker-up": "docker-compose up $npm_package_config_dockerservices",
-    "docker-migrate-up": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-up && npm run pg-seed",
+    "docker-migrate-up": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-up-seed",
     "docker-migrate-down": "docker-compose -f docker-compose.yml run --rm -w /usr/src/app kuhts-web npm run pg-down",
     "create-db": "NODE_PATH=./ node ./bin/create.js",
     "travis": "$npm_package_scripts_test --maxWorkers=4",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "NODE_PATH=./ cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
     "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
     "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./bin/",
     "down": "npm run pg-down && npm run redis-down",
@@ -23,6 +23,7 @@
     "pg-make": "NODE_PATH=./ knex migrate:make $NAME --knexfile ./db/config.js",
     "pg-seed": "NODE_PATH=./ knex seed:run --knexfile ./db/config.js",
     "pg-up": "NODE_PATH=./ knex migrate:latest --knexfile ./db/config.js",
+    "pg-up-seed": "npm run pg-up && npm run pg-seed",
     "lint:eslint": "eslint --ignore-path !./.eslintrc.js --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:eslint:fix": "eslint --ignore-path !./.eslintrc.js --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
     "prettify": "prettier --write"
@@ -38,7 +39,7 @@
     ]
   },
   "config": {
-    "dockerservices": "kuhts-postgres kuhts-redis"
+    "dockerservices": "kuhts-web"
   },
   "engines": {
     "npm": ">=6.4.1",

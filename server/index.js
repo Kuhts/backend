@@ -31,7 +31,7 @@ const {
   DOMAIN,
   PORT,
 } = require('env')
-
+log.message(REDIS_URL)
 const client = redis.createClient(REDIS_URL)
 const app = express()
 

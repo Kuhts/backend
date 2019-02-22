@@ -3,6 +3,7 @@ const {
   DATABASE_URL: connection,
 } = require('../env')
 const log = require('../log')
+log.db(`connection: ${connection}`)
 
 const client = 'postgresql'
 const pool = {

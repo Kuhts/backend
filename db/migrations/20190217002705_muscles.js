@@ -7,6 +7,7 @@ exports.up = function(knex) {
     }
     return knex.schema.createTable(key, (table) => {
       table.uuid('id').primary()
+      table.string('pathname').unique()
       table.string('name').defaultTo('')
       table.text('description').defaultTo('')
       table.string('image').defaultTo('')

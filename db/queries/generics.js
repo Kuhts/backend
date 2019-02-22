@@ -3,8 +3,9 @@ const {
 } = require('db')
 module.exports = generate
 
-function generate(table) {
+function generate(name) {
   return {
+    table,
     count,
     remove,
     create,
@@ -12,6 +13,10 @@ function generate(table) {
     findOne,
     find: read,
     read,
+  }
+
+  function table() {
+    return connection(name)
   }
 
   function count(select) {

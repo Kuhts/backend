@@ -7,7 +7,23 @@ services:
     restart: always
     environment:
       - "DATABASE_URL=postgres://kuhts:password@kuhts-postgres/kuhts"
+      - "REDIS_URL=redis://kuhts-redis:6379"
       - DEBUG
       - DEBUG_COLORS
       - HEROKU_SLUG_COMMIT
       - PORT
+      - NODE_ENV
+      - NODE_PATH
+      - FACEBOOK_KEY
+      - FACEBOOK_SECRET
+      - GITHUB_KEY
+      - GITHUB_SECRET
+      - GOOGLE_KEY
+      - GOOGLE_SECRET
+      - TWITTER_KEY
+      - TWITTER_SECRET
+      - MEDIUM_KEY
+      - MEDIUM_SECRET
+      - REDDIT_KEY
+      - REDDIT_SECRET
+      - SESSION_SECRET

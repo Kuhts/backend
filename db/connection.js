@@ -1,5 +1,4 @@
 const Knex = require('knex')
 const { chosen, } = require('db/config')
 const log = require('log')
-log.db(chosen)
 module.exports = Knex(chosen)
