@@ -63,9 +63,9 @@ function create(prov) {
 }
 
 function deserializeUser(id, cb) {
-  return users.get({
+  return users.read({
     id,
-  }).then(([user]) => cb(null, user)).catch(cb)
+  }).then((users) => cb(null, users[0])).catch(cb)
 }
 
 function serializeUser(data, cb) {

@@ -29,7 +29,6 @@ const {
   SESSION_SECRET,
   REDIS_URL,
   DOMAIN,
-  PORT,
 } = require('env')
 log.message(REDIS_URL)
 const client = redis.createClient(REDIS_URL)
@@ -101,13 +100,12 @@ app.get('/', (req, res, next) => {
   res.status(200).send('ack.')
 })
 
-function start(port = PORT) {
+function start(port) {
   return new Promise((resolve, reject) => (
     server.listen(port, (err) => {
       if (err) {
         reject(err)
       } else {
-        log.message(`listening on ${port}`)
         resolve(app)
       }
     })

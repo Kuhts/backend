@@ -14,7 +14,7 @@
     "create-db": "NODE_PATH=./ node ./bin/create.js",
     "travis": "$npm_package_scripts_test --maxWorkers=4",
     "test": "NODE_PATH=./ cross-env NODE_ENV=test jest --detectOpenHandles --forceExit",
-    "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./server",
+    "dev": "npm run pg-up && npm run pg-seed && NODE_PATH=./ nodemon ./bin/",
     "start": "npm run pg-up && npm run pg-seed && NODE_PATH=./ node ./bin/",
     "down": "npm run pg-down && npm run redis-down",
     "up": "npm run pg-up && npm run pg-seed",
